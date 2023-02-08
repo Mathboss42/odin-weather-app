@@ -11,13 +11,8 @@ unitSelector.addEventListener('change', selectHandler);
 searchButton.addEventListener('click', clickHandler);
 
 
-const defaultCity = 'New York';  
-let currentCity;
-
-
 function clickHandler() {
     if (cityInput.value !== '') {
-        currentCity = cityInput.value;
         getWeather(cityInput.value);
     } else {
         getWeather();
@@ -26,12 +21,18 @@ function clickHandler() {
 
 
 function selectHandler() {
-    getWeather(currentCity);
+    getWeather();
 }
 
 
-async function getWeather(location = defaultCity, unit = unitSelector.value) {
-    console.log(location, await logicManager.getWeatherData(location, unitSelector.value));
+async function getWeather(location, unit = unitSelector.value) {
+    try {
+        console.log(location, await logicManager.getWeatherData(location, unitSelector.value));
+    } catch (error) {
+        if (logicManager.getCurrentCity()) {
+            console.log(logicManager.getCurrentCity(), await logicManager.getWeatherData(logicManager.getCurrentCity(), unitSelector.value));
+        }
+    }
 }
 
 

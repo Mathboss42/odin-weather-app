@@ -1,27 +1,48 @@
 import { format } from "date-fns";
 
 
-export async function getWeatherData(location, unit) {
-    const rawData = await hitAPI(location, unit);
-    const processedData = processWeatherData(rawData);
 
-    return processedData;
+let currentCity;
+
+
+
+export function getCurrentCity() {
+    return currentCity;
 }
+
+
+export async function getWeatherData(location, unit) {
+    try { 
+        const rawData = await hitAPI(location, unit);
+        const processedData = processWeatherData(rawData);
+        currentCity = processedData.city;
+        return processedData;
+    } catch {
+        return Promise.reject();
+    }
+}
+
 
 
 async function hitAPI(location, unit) {
     try {
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}&units=${unit}`;
-        console.log(location, 'url', url);
-
-        const data = await fetch(url);
-        console.log(location, 'data', data);
+        
+        const data = await fetch(url).then(function (response) {
+            if (!response.ok) {
+                alert(`Could not find ${location}`);
+                throw new Error("Not 2xx response", {cause: response});
+            } else {
+                return response;
+            }
+        }).catch(function(err) {
+            console.log(err);
+        });
         const result = await data.json();
-        console.log(location, 'result', result);
-
-        return result;
+        return result;       
     } catch (error) {
         console.log(error);
+        return Promise.reject();
     }
 }
 
