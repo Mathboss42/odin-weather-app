@@ -1,6 +1,14 @@
 import { format } from "date-fns";
 
 
+export async function getWeatherData(location, unit) {
+    const rawData = await hitAPI(location, unit);
+    const processedData = processWeatherData(rawData);
+
+    return processedData;
+}
+
+
 async function hitAPI(location, unit) {
     try {
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}&units=${unit}`;
@@ -27,7 +35,7 @@ function processWeatherData(dataObject) {
             description: matchWeatherDesc(dataObject.weather[0].description),
             temperature: dataObject.main.temp,
             humidity: dataObject.main.humidity,
-            wind: dataObject.wind.speed,
+            wind: convertSpeed(dataObject.wind.speed),
         }
     };
     
@@ -45,6 +53,12 @@ function convertCountry(countryCode) {
     const regionNames = new Intl.DisplayNames(['en'], {type: 'region'});
     return regionNames.of(countryCode); 
 }
+
+
+function convertSpeed(speed) {
+    return speed * 3.6;
+}
+
 
 function matchWeatherDesc(desc) {
     switch (desc) {
@@ -65,12 +79,4 @@ function matchWeatherDesc(desc) {
         case 'mist':
             return 'Misty';
     }
-}
-
-
-export async function getWeatherData(location, unit) {
-    const rawData = await hitAPI(location, unit);
-    const processedData = processWeatherData(rawData);
-
-    return processedData;
 }
