@@ -1,3 +1,2 @@
 import './styles.css';
-
-console.log('hello');
+import {API_KEY as API_KEY} from './key.js';
