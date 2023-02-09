@@ -1,4 +1,5 @@
-import './styles.css';
+import './css/styles.scss';
+import * as bootstrap from 'bootstrap';
 import * as logicManager from './logic-manager';
 import * as domManager from './dom-manager';
 
