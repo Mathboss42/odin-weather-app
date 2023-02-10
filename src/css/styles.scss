@@ -8,6 +8,13 @@
     height: 100vh;
 }
 
-// h1 {
-//     text-align: center;
-// }
+@font-face {
+    font-family: 'Cyberpunk';
+    src: url('./Cyberpunk.ttf') format('truetype');
+}
+
+h1 {
+    font-family: 'Cyberpunk';
+    color: yellow;
+    text-shadow: 2px 2px 0px rgb(71, 185, 232);
+}
