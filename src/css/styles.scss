@@ -1,1 +1,13 @@
 @import "~bootstrap/scss/bootstrap";
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--bs-primary);
+}
+
+.odw-container {
+    height: 100vh;
+}
+
+// h1 {
+//     text-align: center;
+// }

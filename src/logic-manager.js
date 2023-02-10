@@ -3,7 +3,7 @@ import { format } from "date-fns";
 
 
 let currentCity;
-
+let defaultCity = 'New York';
 
 
 export function getCurrentCity() {
@@ -12,7 +12,8 @@ export function getCurrentCity() {
 
 
 export async function getWeatherData(location, unit) {
-    try { 
+    try {
+        checkLocation(location);
         const rawData = await hitAPI(location, unit);
         const processedData = processWeatherData(rawData);
         currentCity = processedData.city;
@@ -23,9 +24,16 @@ export async function getWeatherData(location, unit) {
 }
 
 
+function checkLocation(location) {
+    if (location == undefined && !currentCity) {
+        currentCity = defaultCity;
+    }
+}
 
-async function hitAPI(location, unit) {
+
+async function hitAPI(location = currentCity, unit) {
     try {
+
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.API_KEY}&units=${unit}`;
         
         const data = await fetch(url).then(function (response) {
