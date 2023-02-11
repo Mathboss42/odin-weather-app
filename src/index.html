@@ -8,9 +8,9 @@
     <title>Odin Weather App</title>
 </head>
 <body>
-    <div class="container-xl p-3 bg-light odw-container">
+    <div class="container-fluid bg-dark p-3 bg-light odw-container">
 
-        <div class="row bg-dark text-light justify-content-center">
+        <div class="row text-light justify-content-center">
           <div class="col-auto">
               <h1>CyberWeather</h1>
           </div>
@@ -21,7 +21,7 @@
                 <div class="col-xl-auto">
                     <div class="row">
                         <div class="col-xl-auto">
-                            <label for="city" class="form-label">City</label>
+                            <label for="city" class="form-label text-white">City</label>
                         </div>
                     </div>
                     <div class="row">
@@ -35,7 +35,7 @@
                 </div>
                 
                 <div class="col-xl-auto">
-                    <label for="unit" class="form-label">Unit</label>
+                    <label for="unit" class="form-label text-white">Unit</label>
                     <select class="form-select" aria-label="Unit" name="unit" id="unit">
                         <option value="metric" selected>C°</option>
                         <option value="imperial">F°</option>
@@ -45,25 +45,38 @@
 
         </form>
   
-        <div class="row h-25 justify-content-center">
-          <div class="col-xl-6">
-            <div class="row">
-              <div class="col-6 bg-dark">
-                <img src="" class="img-fluid" alt="weather">
-              </div>
-              <div class="col-6 bg-primary">
-  
-              </div>
-              <div class="row">
-                  <div class="col-4 bg-secondary">
-                    <p>he</p>
-                  </div>
-              </div>
+        <div class="container w-50 my-5 justify-content-center">
+            <div class="row h-25 justify-content-center">
+                <div class="col-xl-auto">
+                    <div class="row h-100">
+                        <div class="col-6 bg-secondary rounded-start" id="icon">
+                            <div></div>
+                        </div>
+                        <div class="col-6 bg-secondary rounded-end">
+                            <div class="row align-items-center">
+                                <div class="col-auto" id="temp-div">
+                                    <span class="text-white odw-bigbig-font" id="temperature"></span>
+                                    <div class="text-white odw-big-font" id="unit-display"></div>
+                                </div>
+                                <div class="col">
+                                    <div class="text-white odw-medium-font" id="location"></div>
+                                    <div class="text-white odw-small-font" id="time"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col bg-secondary">
+                                    <div class="text-white odw-medium-font my-3" id="desc"></div>
+                                    <div class="text-white odw-small-font">Humidity: <span id="humidity"></span>%</div>
+                                    <div class="text-white odw-small-font">Wind: <span id="wind"></span>kmh</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
   
-      </div>
+    </div>
     <!-- <div class="container py-4 px-3 mx-auto">
         <div class="row justify-content-md-center">
             <h1 class="col col-md-auto">CyberWeather2023</h1>

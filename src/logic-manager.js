@@ -15,6 +15,7 @@ export async function getWeatherData(location, unit) {
     try {
         checkLocation(location);
         const rawData = await hitAPI(location, unit);
+        console.log(rawData);
         const processedData = processWeatherData(rawData);
         currentCity = processedData.city;
         return processedData;
@@ -61,10 +62,10 @@ function processWeatherData(dataObject) {
         country: convertCountry(dataObject.sys.country),
         time: convertTime(dataObject.timezone),
         weather: {
-            description: matchWeatherDesc(dataObject.weather[0].description),
-            temperature: dataObject.main.temp,
-            humidity: dataObject.main.humidity,
-            wind: convertSpeed(dataObject.wind.speed),
+            description: matchWeatherDesc(dataObject.weather[0].main),
+            temperature: Math.floor(dataObject.main.temp),
+            humidity: Math.floor(dataObject.main.humidity),
+            wind: Math.floor(convertSpeed(dataObject.wind.speed)),
         }
     };
     
@@ -92,20 +93,27 @@ function convertSpeed(speed) {
 function matchWeatherDesc(desc) {
     switch (desc) {
         case 'clear sky':
+        case 'Clear':
         case 'few clouds':
             return 'Sunny';
         case 'scattered clouds':
+        case 'Clouds':
         case 'broken clouds':
             return 'Cloudy';
+        case 'light rain':
         case 'shower rain':
-            return 'Showers';
         case 'rain':
+        case 'Rain':
             return 'Rainy';
         case 'thunderstorm':
+        case 'Thunderstorm':
+        case 'Storm':
             return 'Thunderstorm';
         case 'snow':
+        case 'Snow':
             return 'Snowy';
         case 'mist':
+        case 'Mist':
             return 'Misty';
     }
 }

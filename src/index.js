@@ -3,8 +3,9 @@ import * as bootstrap from 'bootstrap';
 import * as logicManager from './logic-manager';
 import * as domManager from './dom-manager';
 
+
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+// const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 
 const formSelector = document.querySelector('form');
@@ -20,17 +21,17 @@ function clickHandler(e) {
     e.preventDefault();
     if (cityInput.value !== '') {
         getWeather(cityInput.value);
-        formSelector.reset();
+        cityInput.reset();
     } else {
         getWeather();
-        formSelector.reset();
+        cityInput.reset();
     }
 }
 
 
 function selectHandler() {
     getWeather();
-    formSelector.reset();
+    cityInput.reset();
 }
 
 
@@ -40,7 +41,17 @@ async function getWeather(location, unit = unitSelector.value) {
         domManager.toggleLoading();
         const data = await logicManager.getWeatherData(location, unit);
         domManager.toggleLoading();
-        domManager.refreshDom(data.city);
+        console.log(data.weather.description);
+        domManager.refreshDom(
+            data.city,
+            data.country,
+            data.time,
+            data.weather.description,
+            data.weather.temperature,
+            data.weather.humidity,
+            data.weather.wind,
+            unit
+        );
     } catch (error) {
         // if (logicManager.getCurrentCity()) {
         //     console.log(logicManager.getCurrentCity(), await logicManager.getWeatherData(logicManager.getCurrentCity(), unitSelector.value));
